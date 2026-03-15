@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Let The Rest Go — Focus on what matters</title>
-    <meta name="description" content="A brutally simple iOS app for focus-driven task management. Keep your top 6 priorities visible. Let the rest go.">
+    <title>Let The Rest Go — Fewer Tasks. More Focus.</title>
+    <meta name="description" content="What if your todo app only let you have 6 things? A brutally simple iOS app for focus-driven task management. $1.99 on the App Store.">
     <meta name="theme-color" content="#1a1d21">
     
     <!-- Open Graph -->
     <meta property="og:title" content="Let The Rest Go">
-    <meta property="og:description" content="A brutally simple iOS app for focus-driven task management. Maximum 6 items. Maximum clarity.">
+    <meta property="og:description" content="What if your todo app only let you have 6 things? Fewer tasks. More focus. $1.99 on the App Store.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lettherestgo.com">
     
@@ -60,7 +60,7 @@
         /* Header */
         .header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
         
         .tagline {
@@ -77,11 +77,18 @@
             font-weight: 600;
             color: var(--card-1);
             letter-spacing: -0.5px;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
         
         .subtitle {
-            font-size: 1.125rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--card-2);
+            margin-bottom: 1rem;
+        }
+        
+        .hook {
+            font-size: 1rem;
             color: var(--text-muted);
             max-width: 400px;
             margin: 0 auto;
@@ -162,11 +169,11 @@
         }
         
         .philosophy-text {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 500;
             color: var(--card-2);
             line-height: 1.5;
-            max-width: 400px;
+            max-width: 420px;
             margin: 0 auto;
         }
         
@@ -200,10 +207,81 @@
             color: var(--text-muted);
         }
         
+        /* Anti-features */
+        .anti-features {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+        }
+        
+        .anti-title {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+        
+        .anti-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem 1.5rem;
+            list-style: none;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+        
+        .anti-list li::before {
+            content: "✕ ";
+            opacity: 0.5;
+        }
+        
+        /* Who it's for */
+        .audience {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 3rem 0;
+        }
+        
+        .audience-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--card-1);
+            margin-bottom: 1rem;
+        }
+        
+        .audience-list {
+            list-style: none;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+        
+        .audience-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .audience-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
         /* CTA */
         .cta {
             text-align: center;
             margin: 4rem 0 2rem;
+        }
+        
+        .cta-text {
+            font-size: 1.1rem;
+            color: var(--card-2);
+            margin-bottom: 1.5rem;
         }
         
         .app-store-badge {
@@ -221,14 +299,10 @@
             width: auto;
         }
         
-        .coming-soon {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: var(--surface);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-muted);
+        .price {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-dim);
         }
         
         /* Footer */
@@ -256,12 +330,21 @@
                 font-size: 1.75rem;
             }
             
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
             .philosophy-text {
-                font-size: 1.25rem;
+                font-size: 1.2rem;
             }
             
             .card {
                 margin-bottom: -50px;
+            }
+            
+            .anti-list {
+                flex-direction: column;
+                gap: 0.5rem;
             }
         }
     </style>
@@ -271,7 +354,8 @@
         <header class="header">
             <p class="tagline">Focus tool for iOS</p>
             <h1 class="title">Let The Rest Go</h1>
-            <p class="subtitle">A brutally simple app for focus-driven task management. Keep your top 6 priorities visible.</p>
+            <p class="subtitle">Fewer Tasks. More Focus.</p>
+            <p class="hook">What if your todo app only let you have 6 things?</p>
         </header>
         
         <div class="stack-demo">
@@ -302,19 +386,20 @@
         
         <section class="philosophy">
             <p class="philosophy-text">
-                This is not a to-do list.<br>
-                It's a <em>focus</em> list.
+                You don't have 47 priorities.<br>
+                You have 3, maybe 4.<br>
+                <em>The rest is noise.</em>
             </p>
         </section>
         
         <section class="features">
             <div class="feature">
-                <h3 class="feature-title">Maximum 6 items</h3>
-                <p class="feature-desc">Forces ruthless prioritization. If you want to add something new, you have to decide what it's replacing.</p>
+                <h3 class="feature-title">A calm, beautiful stack</h3>
+                <p class="feature-desc">Your tasks appear as physical cards. The top card is NOW. Cards below fade into the background where they belong.</p>
             </div>
             <div class="feature">
                 <h3 class="feature-title">Swipe to complete</h3>
-                <p class="feature-desc">Swipe right when done. The next thing rises to the top. Swipe left to let it go entirely.</p>
+                <p class="feature-desc">Swipe right when done. The next card rises to the top. You're already focused on what's next.</p>
             </div>
             <div class="feature">
                 <h3 class="feature-title">Home screen widgets</h3>
@@ -322,14 +407,38 @@
             </div>
             <div class="feature">
                 <h3 class="feature-title">Archive your wins</h3>
-                <p class="feature-desc">Everything you complete is saved. Browse by day, week, month, or year.</p>
+                <p class="feature-desc">Every completed task goes to your Done archive. Grouped by day, week, month, or year. Watch your stack grow.</p>
             </div>
         </section>
         
+        <section class="anti-features">
+            <p class="anti-title">What you won't find here</p>
+            <ul class="anti-list">
+                <li>Due dates</li>
+                <li>Reminders</li>
+                <li>Tags</li>
+                <li>Projects</li>
+                <li>Cloud sync</li>
+                <li>Integrations</li>
+            </ul>
+        </section>
+        
+        <section class="audience">
+            <h3 class="audience-title">This might be for you if...</h3>
+            <ul class="audience-list">
+                <li>You've tried "real" task managers and bounced</li>
+                <li>You write tomorrow's 3 things on paper</li>
+                <li>You want to see your focus, not manage a system</li>
+                <li>You value calm over comprehensive</li>
+            </ul>
+        </section>
+        
         <section class="cta">
+            <p class="cta-text">Add six things. Start finishing.</p>
             <a href="https://apps.apple.com/app/let-the-rest-go/id6760481334" class="app-store-badge">
                 <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
             </a>
+            <p class="price">$1.99 · iPhone, iPad & Mac</p>
         </section>
         
         <footer class="footer">
