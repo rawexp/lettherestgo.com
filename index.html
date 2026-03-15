@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let The Rest Go — Focus on what matters</title>
+    <meta name="description" content="A brutally simple iOS app for focus-driven task management. Keep your top 6 priorities visible. Let the rest go.">
+    <meta name="theme-color" content="#1a1d21">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Let The Rest Go">
+    <meta property="og:description" content="A brutally simple iOS app for focus-driven task management. Maximum 6 items. Maximum clarity.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lettherestgo.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%231a1d21' width='100' height='100' rx='20'/><rect fill='%23faf8f5' x='15' y='20' width='70' height='20' rx='4'/><rect fill='%23e4e2dc' x='20' y='45' width='60' height='15' rx='3'/><rect fill='%23c2c0ba' x='25' y='65' width='50' height='12' rx='2'/></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg: #1a1d21;
+            --card-1: #faf8f5;
+            --card-2: #f0eee9;
+            --card-3: #e4e2dc;
+            --card-4: #d4d2cc;
+            --card-5: #c2c0ba;
+            --card-6: #a8a6a0;
+            --text-dark: #1a1816;
+            --text-muted: #888888;
+            --text-dim: #555555;
+            --accent: #44aa99;
+            --surface: #22262b;
+        }
+        
+        html {
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Rounded', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text-muted);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .tagline {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        
+        .title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--card-1);
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        /* Stack Demo */
+        .stack-demo {
+            position: relative;
+            margin: 3rem auto;
+            max-width: 320px;
+        }
+        
+        .card {
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: -60px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:last-child {
+            margin-bottom: 0;
+        }
+        
+        .card-1 { 
+            background: var(--card-1); 
+            z-index: 6;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.12);
+        }
+        .card-2 { background: var(--card-2); z-index: 5; box-shadow: 0 6px 12px rgba(0,0,0,0.06); }
+        .card-3 { background: var(--card-3); z-index: 4; box-shadow: 0 4px 8px rgba(0,0,0,0.04); }
+        .card-4 { background: var(--card-4); z-index: 3; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+        .card-5 { background: var(--card-5); z-index: 2; }
+        .card-6 { background: var(--card-6); z-index: 1; }
+        
+        .card-label {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: var(--text-dark);
+            opacity: 0.4;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .card-text-small {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+        
+        .card-hints {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--text-dark);
+            opacity: 0.25;
+            text-transform: uppercase;
+        }
+        
+        /* Philosophy */
+        .philosophy {
+            text-align: center;
+            margin: 5rem 0;
+            padding: 2rem;
+        }
+        
+        .philosophy-text {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--card-2);
+            line-height: 1.5;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .philosophy-text em {
+            color: var(--accent);
+            font-style: normal;
+        }
+        
+        /* Features */
+        .features {
+            display: grid;
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .feature {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+        
+        .feature-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--card-1);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        /* CTA */
+        .cta {
+            text-align: center;
+            margin: 4rem 0 2rem;
+        }
+        
+        .app-store-badge {
+            display: inline-block;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        
+        .app-store-badge:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        
+        .app-store-badge img {
+            height: 54px;
+            width: auto;
+        }
+        
+        .coming-soon {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--surface);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--surface);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+        
+        .footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            color: var(--card-1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.75rem;
+            }
+            
+            .philosophy-text {
+                font-size: 1.25rem;
+            }
+            
+            .card {
+                margin-bottom: -50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <p class="tagline">Focus tool for iOS</p>
+            <h1 class="title">Let The Rest Go</h1>
+            <p class="subtitle">A brutally simple app for focus-driven task management. Keep your top 6 priorities visible.</p>
+        </header>
+        
+        <div class="stack-demo">
+            <div class="card card-1">
+                <div class="card-label">Now</div>
+                <div class="card-text">Ship the landing page</div>
+                <div class="card-hints">
+                    <span>← Let go</span>
+                    <span>Done →</span>
+                </div>
+            </div>
+            <div class="card card-2">
+                <div class="card-text-small">Finalize App Store screenshots</div>
+            </div>
+            <div class="card card-3">
+                <div class="card-text-small">Write release notes</div>
+            </div>
+            <div class="card card-4">
+                <div class="card-text-small">Submit for review</div>
+            </div>
+            <div class="card card-5">
+                <div class="card-text-small">Plan launch tweet</div>
+            </div>
+            <div class="card card-6">
+                <div class="card-text-small">Update documentation</div>
+            </div>
+        </div>
+        
+        <section class="philosophy">
+            <p class="philosophy-text">
+                This is not a to-do list.<br>
+                It's a <em>focus</em> list.
+            </p>
+        </section>
+        
+        <section class="features">
+            <div class="feature">
+                <h3 class="feature-title">Maximum 6 items</h3>
+                <p class="feature-desc">Forces ruthless prioritization. If you want to add something new, you have to decide what it's replacing.</p>
+            </div>
+            <div class="feature">
+                <h3 class="feature-title">Swipe to complete</h3>
+                <p class="feature-desc">Swipe right when done. The next thing rises to the top. Swipe left to let it go entirely.</p>
+            </div>
+            <div class="feature">
+                <h3 class="feature-title">Home screen widgets</h3>
+                <p class="feature-desc">See your current focus without opening the app. Small, medium, and large sizes available.</p>
+            </div>
+            <div class="feature">
+                <h3 class="feature-title">Archive your wins</h3>
+                <p class="feature-desc">Everything you complete is saved. Browse by day, week, month, or year.</p>
+            </div>
+        </section>
+        
+        <section class="cta">
+            <!-- Replace with App Store badge when live -->
+            <div class="coming-soon">Coming soon to the App Store</div>
+            
+            <!-- Uncomment when app is live:
+            <a href="https://apps.apple.com/app/id000000000" class="app-store-badge">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+            </a>
+            -->
+        </section>
+        
+        <footer class="footer">
+            <p>Made by <a href="https://rawexp.com">rawexp</a></p>
+        </footer>
+    </div>
+</body>
+</html>
